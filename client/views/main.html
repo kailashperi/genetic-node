@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>IA Challenge</title>
+    </head>
+    <link rel="stylesheet" href="../styles/main.style.css">
+    <body>
+        <section>
+            <header>
+                <h2>Configs</h2>
+            </header>
+            <label for="limit">Limit: </label>
+            <input type="number" name="limit" id="limit" value="200">
+            <input type="file" name="csv" id="file">
+            <button id="trigger">Start</button>
+            <button id="ajax">AJAX</button>
+        </section>
+        <section class="container">
+            <header>
+                <h3>Data</h3>
+            </header>
+            <main id="data-container">
+
+            </main>
+        </section>
+        <section class="container">
+            <header>
+                <h3>Generations</h3>
+            </header>
+            <main id="generations-container">
+
+            </main>
+        </section>
+        <section class="container">
+            <header>
+                <h3>Results</h3>
+            </header>
+            <main id="results-container">
+
+            </main>
+        </section>
+        <script src="../dist/main.min.js" type="text/javascript"></script>
+    </body>
+</html>

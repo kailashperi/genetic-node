@@ -4,18 +4,17 @@
 (function () {
     "use strict";
 
+    var randomNumberGenerator = require("./randomNumberGenerator");
+
+
     module.exports = function (entry) {
 
         var hypothesisArr = [];
 
-        function generateRandomNumber(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
-
         function generateHypothesis(length) {
             var emptyArr = [];
             for (var i = 0; i < length; i += 1) {
-                emptyArr.push(generateRandomNumber(0, 1));
+                emptyArr.push(randomNumberGenerator(0, 1));
             }
             return emptyArr;
         }

@@ -4,6 +4,7 @@
 (function () {
     "use strict";
 
+    var randomNumberGenerator = require("./randomNumberGenerator");
 
     function removeFitness (array) {
         for (var i = 0; i < array.length; i += 1) {
@@ -14,23 +15,35 @@
         return array;
     }
 
-    function performMutation (model, junk) {
-        console.log(model);
-        console.log(junk);
+    function performMutation (item) {
+        var mutationFactor = randomNumberGenerator(1, 1000);
+
+        if (mutationFactor <= 0.05) {
+            item[item.length - 1] = 1;
+        }
+        return item;
+    }
+
+    function crossOver (model, junk) {
+
         for (var i = 0; i < junk.length; i += 1) {
             for (var j = 0; j < junk[i].length / 3; j += 1) {
-                junk[i][j]= model[i][j];
+                console.log("mutating");
+                junk[i][j] = model[i][j];
+                performMutation(junk[i]);
             }
         }
+
         return removeFitness(junk);
     }
 
     module.exports = function (object) {
-        // if (object.removed.length) {
-            return [].concat(object.processed, performMutation(object.processed, object.removed));
-        // } else {
-            // return [].concat(object.processed, performMutation(object.processed, object.removed));
-        // }
+        if (object.removed.length) {
+            return [].concat(object.processed, crossOver(object.processed, object.removed));
+        } else {
+            return [].concat(object.processed, crossOver(object.processed, object.removed));
+            // return [].concat(object.processed, crossOver(object.processed, object.processed.reverse(), "positive"));
+        }
 
 
     };

@@ -4,21 +4,25 @@
 (function () {
     "use strict";
 
-    module.exports = function (configs) {
+    var properties = {
+        limit: 200,
+        items: []
+    };
 
-        console.log("ENTERING FITNESS EVALUATION");
-        console.log(configs.dataSet);
-        console.log("\n");
-
-        function evaluate(attributes) {
-            if (attributes.weight > configs.limit || !attributes.weight) {
+    var methods = {
+        init: function (limit, items, dataSet) {
+            properties.limit = limit || 200;
+            properties.items = items || [];
+            return this.fitness(dataSet);
+        },
+        evaluate: function evaluate(attributes) {
+            if (attributes.weight > properties.limit || !attributes.weight) {
                 return 0;
             }
 
             return (attributes.price * 0.00100);
-        }
-
-        function removeUnfit(itemsToCheck) {
+        },
+        removeUnfit: function removeUnfit(itemsToCheck) {
             var removalReference = 0,
                 removalIndex = [],
                 removed = [];
@@ -38,18 +42,16 @@
                 "processed": itemsToCheck,
                 "removed": removed
             };
-        }
-
-
-        function fitness (dataSet) {
+        },
+        fitness: function fitness (dataSet) {
             for (var i = 0; i < dataSet.length; i += 1) {
                 var weightCounter = 0,
                     valueCounter = 0,
                     totalItems = 0;
                 for (var j = 0; j < dataSet[i].length; j += 1) {
                     if (dataSet[i][j]) {
-                        weightCounter += Number(configs.items[i].weight.value);
-                        valueCounter += Number(configs.items[i].price.value);
+                        weightCounter += Number(properties.items[i].weight.value);
+                        valueCounter += Number(properties.items[i].price.value);
                         totalItems += 1;
                     }
                 }
@@ -58,7 +60,7 @@
                     console.log("has fitness");
                 } else {
                     dataSet[i].push({
-                        "fitness": evaluate({
+                        "fitness": this.evaluate({
                             "weight": weightCounter,
                             "price": valueCounter,
                             "totalItems": totalItems
@@ -67,7 +69,7 @@
                 }
             }
 
-            var data = removeUnfit(dataSet);
+            var data = this.removeUnfit(dataSet);
 
             data.processed.sort(function (a, b) {
                 try {
@@ -82,12 +84,14 @@
                 "processed": data.processed,
                 "removed": data.removed
             };
+        },
+        sortHypothesis: function (hypothesis) {
+
         }
+    };
 
-        var x = fitness(configs.dataSet);
-
-        return x;
-
+    module.exports = function (configs) {
+        return methods.init(configs.limit, configs.items, configs.dataSet);
     };
 
 }());

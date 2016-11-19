@@ -6,23 +6,50 @@
 
     var randomNumberGenerator = require("./randomNumberGenerator");
 
+    var properties = {
+        hypothesisArr: []
+    };
 
-    module.exports = function (entry) {
-
-        var hypothesisArr = [];
-
-        function generateHypothesis(length) {
+    var methods = {
+        //Hypothesis generator bootstrap
+        //@PARAM {Number} containing backpack item length
+        //Return {Array} containing array populated with chromosomes
+        init: function (itemsLength) {
+            var hypothesis;
+            for (var i = 0; i < itemsLength; i += 1) {
+                this.appendChromosome(this.generateChromosome(itemsLength));
+            }
+            hypothesis = this.getHypothesisArr();
+            this.cleanHypothesisArr();
+            return hypothesis;
+        },
+        //Get the generated hypothesis array
+        //Return {Array} containing arrays of chromosomes
+        getHypothesisArr: function () {
+            return properties.hypothesisArr;
+        },
+        //Set the hypothesis array to empty initial state
+        cleanHypothesisArr: function () {
+            properties.hypothesisArr = [];
+        },
+        //Append a chromosome to hypothesis array
+        //@PARAM {Array} containing a single chromosome
+        appendChromosome: function (chromosome) {
+            this.getHypothesisArr().push(chromosome);
+        },
+        //Create a new chromosome
+        //Return {Array} containing a new chromosome
+        generateChromosome: function (length) {
             var emptyArr = [];
             for (var i = 0; i < length; i += 1) {
                 emptyArr.push(randomNumberGenerator(0, 1));
             }
             return emptyArr;
         }
-
-        for (var i = 0; i < entry.length; i += 1) {
-            hypothesisArr.push(generateHypothesis(entry.length));
-        }
-
-        return hypothesisArr;
     };
+
+    module.exports = function (entry) {
+        return methods.init(entry);
+    };
+
 }());

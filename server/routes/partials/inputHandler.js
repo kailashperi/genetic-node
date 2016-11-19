@@ -7,10 +7,10 @@
 
     module.exports = function (app, upload, inputProcesser, hypothesisGenerator, fitnessEvaluator, mutator, io, fs) {
 
-        io.on('connection', function (socket) {
-            console.log('socket connected');
-            socket.once('disconnect', function () {
-                console.log([io.engine.clientsCount, 'Clients connected after this exit'].join(' '));
+        io.on("connection", function (socket) {
+            console.log("socket connected");
+            socket.once("disconnect", function () {
+                console.log([io.engine.clientsCount, "Clients connected after this exit"].join(" "));
             });
 
             socket.on("tst", function (request) {
@@ -19,15 +19,14 @@
                         console.log(err);
                         socket.emit("error", err);
                     } else {
-                        inputProcesser("./server/tmp/entry.txt").then(function (data) {
+                        inputProcesser("./server/tmp/entry.txt", fs).then(function (data) {
                             socket.emit("dataSet", data);
-                            console.log("aqui");
-                            var hypothesisArr = hypothesisGenerator(data.items),
+                            var hypothesisArr = hypothesisGenerator(data.items.length),
                                 mutationLimit = 10,
                                 evaluated = fitnessEvaluator({
                                     "limit": request.limit,
                                     "items": data.items,
-                                    "dataSet": JSON.parse(JSON.stringify(hypothesisArr))
+                                    "hypothesis": JSON.parse(JSON.stringify(hypothesisArr))
                                 });
 
 
@@ -43,7 +42,7 @@
                                     evaluated = fitnessEvaluator({
                                         "limit": request.limit,
                                         "items": data.items,
-                                        "dataSet": d
+                                        "hypothesis": d
                                     });
                                     socket.emit("mutation", evaluated);
                                 } catch (e) {
@@ -63,7 +62,7 @@
             });
         });
 
-        app.post('/csv', upload.single('csv'), function (req, res) {
+        app.post("/csv", upload.single("csv"), function (req, res) {
             try {
                 var file = req.file.buffer.toString();
                 fs.writeFile("./server/tmp/entry.txt", file, function (err) {
@@ -72,7 +71,7 @@
                         return res.status(500).send(err);
                     } else {
                         inputProcesser("./server/tmp/entry.txt").then(function (data) {
-                                var hypothesisArr = hypothesisGenerator(data.items),
+                            var hypothesisArr = hypothesisGenerator(data.items),
                                 mutationLimit = 10,
                                 evaluated = fitnessEvaluator(data.limit, data.items, hypothesisArr);
                             //

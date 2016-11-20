@@ -11,7 +11,7 @@
     var readline = require("readline");
 
     var properties = {
-        itemArr: []
+        "itemArr": []
     };
 
     var methods = {
@@ -19,28 +19,28 @@
         //@PARAM {String} containing the file path to be read
         //@PARAM {JSON} file system object
         //Start promise that resolve items extracted from file
-        init: function (path, fs) {
+        "init": function (path, fs) {
             return readline.createInterface({
                 "input": fs.createReadStream(path)
             });
         },
         //Get item array
         //Return items array
-        getItemArr: function () {
+        "getItemArr": function () {
             return properties.itemArr;
         },
         //Set items array to empty initial state
-        cleanItemArr: function () {
+        "cleanItemArr": function () {
             properties.itemArr = [];
         },
         //Append attributes to each item present in file
         //@PARAM {JSON} containing weight and price info
-        appendAttributes: function (attributes) {
+        "appendAttributes": function (attributes) {
             this.getItemArr().push(attributes);
         },
         //Callback to be executed on each line read from file
         //@PARAM {Array} representing the line read
-        lineReaderCallback: function (line) {
+        "lineReaderCallback": function (line) {
             var lineEl = line.split(",");
 
             methods.appendAttributes({
@@ -59,18 +59,24 @@
     module.exports = function (path, fs) {
         return new Promise(function (resolve, reject) {
 
-            var lineReader = methods.init(path, fs),
-                items;
+            try {
+                var lineReader = methods.init(path, fs),
+                    items;
 
-            lineReader.on('line', methods.lineReaderCallback);
+                lineReader.on('line', methods.lineReaderCallback);
 
-            lineReader.on("close", function () {
-                items = methods.getItemArr();
-                methods.cleanItemArr();
-                resolve({
-                    "items": items
+                lineReader.on("close", function () {
+                    items = methods.getItemArr();
+                    methods.cleanItemArr();
+                    resolve({
+                        "items": items
+                    });
                 });
-            });
+            } catch (e) {
+                console.log(e);
+                reject(e);
+            }
+
         });
     };
 

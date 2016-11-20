@@ -8,7 +8,7 @@ Node.JS Genetic algorithm implementation aiming to solve 'Backpack Problem'
 ### Steps
 1. Go to project root path via terminal
 2. Run the command 'node server'
-3. Acess the given url (usually localhost:6095) on your browser
+3. Access the given url (usually localhost:6095) on your browser
 
 ## How to use
 1. Hit the 'download sample' button

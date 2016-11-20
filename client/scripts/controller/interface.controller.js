@@ -7,6 +7,7 @@
     module.exports = {
         "triggerBtn": document.getElementById("trigger"),
         "ajaxBtn": document.getElementById("ajax"),
+        "downloadSampleBtn": document.getElementById("sample"),
         "limitInput": document.getElementById("limit"),
         "fileElement": document.getElementById("file"),
         "dataContainer": document.getElementById("data-container"),

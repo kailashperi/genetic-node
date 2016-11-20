@@ -3,17 +3,14 @@
  */
 /*jslint node:true*/
 (function () {
-    'use strict';
+    "use strict";
 
-    var inputHandler = require('./partials/inputHandler');
-
+    var inputHandler = require("./partials/inputHandler"),
+        downloadHandler = require("./partials/downloadHandler");
 
     module.exports = function (app, upload, inputProcesser, hipothesisGenerator, fitnessEvaluator, mutator, eventEmitter, io, fs) {
         inputHandler(app, upload, inputProcesser, hipothesisGenerator, fitnessEvaluator, mutator, eventEmitter, io, fs);
-
-        app.get('/hi', function (req, res) {
-            return res.status(200).send('working');
-        });
+        downloadHandler(app);
     };
 
 }());

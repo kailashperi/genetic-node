@@ -9,6 +9,7 @@
         "ajaxBtn": document.getElementById("ajax"),
         "downloadSampleBtn": document.getElementById("sample"),
         "limitInput": document.getElementById("limit"),
+        "mutationLimitInput": document.getElementById("mutation-limit"),
         "fileElement": document.getElementById("file"),
         "dataContainer": document.getElementById("data-container"),
         "generationsContainer": document.getElementById("generations-container")

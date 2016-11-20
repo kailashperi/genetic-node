@@ -20,33 +20,38 @@
                         socket.emit("error", err);
                     } else {
                         inputProcesser("./server/tmp/entry.txt", fs).then(function (data) {
-                            socket.emit("dataSet", data);
-                            var hypothesisArr = hypothesisGenerator(data.items.length),
-                                mutationLimit = 10,
-                                evaluated = fitnessEvaluator({
-                                    "limit": request.limit,
-                                    "items": data.items,
-                                    "hypothesis": JSON.parse(JSON.stringify(hypothesisArr))
-                                });
-
-                            for (var i = 0; i < 10; i += 1) {
-                                try {
-                                    var d = mutator(JSON.parse(JSON.stringify(evaluated)));
+                            if (data.items.length) {
+                                socket.emit("dataSet", data);
+                                var hypothesisArr = hypothesisGenerator(data.items.length),
+                                    mutationLimit = request.mutationLimit || 10,
                                     evaluated = fitnessEvaluator({
                                         "limit": request.limit,
                                         "items": data.items,
-                                        "hypothesis": d
+                                        "hypothesis": JSON.parse(JSON.stringify(hypothesisArr))
                                     });
-                                    socket.emit("mutation", evaluated);
-                                } catch (e) {
-                                    console.log(e);
+
+                                for (var i = 0; i < mutationLimit; i += 1) {
+                                    try {
+                                        var d = mutator(JSON.parse(JSON.stringify(evaluated)));
+                                        evaluated = fitnessEvaluator({
+                                            "limit": request.limit,
+                                            "items": data.items,
+                                            "hypothesis": d
+                                        });
+                                        socket.emit("mutation", evaluated);
+                                    } catch (e) {
+                                        console.log(e);
+                                    }
                                 }
+
+                                socket.emit("result", {
+                                    items: data.items,
+                                    hypothesis: evaluated
+                                });
+                            } else {
+                                socket.emit("error", "Invalid file input");
                             }
 
-                            socket.emit("result", {
-                                items: data.items,
-                                hypothesis: evaluated
-                            });
                         });
                     }
                 });

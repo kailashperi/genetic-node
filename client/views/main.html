@@ -11,8 +11,9 @@
                 <h2>Configs</h2>
             </header>
             <label for="limit">Limit: </label>
-            <input type="number" name="limit" id="limit" value="200">
-            <input type="file" name="csv" id="file">
+            <input type="number" name="limit" id="limit" value="200" />
+            <input type="number" name="mutationLimit" id="mutation-limit" value="10" />
+            <input type="file" name="csv" id="file" />
             <button id="trigger">Start</button>
             <form method="get" action="/downloadSample">
                 <input type="submit" id="sample" value="Download Sample" />

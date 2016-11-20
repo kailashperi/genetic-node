@@ -41,6 +41,9 @@
         //Callback to be executed on each line read from file
         //@PARAM {Array} representing the line read
         "lineReaderCallback": function (line) {
+            if (line === "undefined") {
+                return;
+            }
             var lineEl = line.split(",");
 
             methods.appendAttributes({

@@ -22,6 +22,7 @@
                 renderController.clearList(interfaceObj.dataContainer).clearList(interfaceObj.generationsContainer);
                 socket.emit("tst", {
                     "limit": inputController.getLimit(interfaceObj.limitInput),
+                    "mutationLimit": inputController.getLimit(interfaceObj.mutationLimitInput),
                     "file": inputController.getFile(interfaceObj.fileElement)
                 });
             },

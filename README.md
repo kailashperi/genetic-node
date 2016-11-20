@@ -1,6 +1,6 @@
 # genetic-node
 Node.JS Genetic algorithm implementation aiming to solve 'Backpack Problem'
-
+[Accessible through cloud](https://ia-challenge.mybluemix.net/ "IA Challenge Page")
 ## How to run the project
 ### Pre-reqs
 - Get installed [Node.JS](https://nodejs.org/en/ "Node.JS official page") and [NPM](npmjs.com "Node Package Manager") 

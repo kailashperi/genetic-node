@@ -4,6 +4,7 @@
   "description": "app to demonstrate genetic algorithms - IA class - Willian Rampazzo teacher",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "dcerag",
@@ -18,7 +19,9 @@
     "morgan": "^1.7.0",
     "multer": "^1.2.0",
     "path": "^0.12.7",
-    "socket-io": "0.0.0",
     "socket.io": "^1.5.1"
+  },
+  "engines": {
+    "node": "4.x"
   }
 }

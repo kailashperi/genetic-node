@@ -11,6 +11,10 @@
     module.exports = function (app, upload, inputProcesser, hipothesisGenerator, fitnessEvaluator, mutator, eventEmitter, io, fs) {
         inputHandler(app, upload, inputProcesser, hipothesisGenerator, fitnessEvaluator, mutator, eventEmitter, io, fs);
         downloadHandler(app);
+
+        app.get("/", function (req, res) {
+            return res.status(200).render("./views/main.html");
+        });
     };
 
 }());

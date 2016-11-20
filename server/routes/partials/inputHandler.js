@@ -29,16 +29,9 @@
                                     "hypothesis": JSON.parse(JSON.stringify(hypothesisArr))
                                 });
 
-
-
-                            console.log(" AQUI ");
-
-
                             for (var i = 0; i < 10; i += 1) {
-                                console.log(i);
                                 try {
                                     var d = mutator(JSON.parse(JSON.stringify(evaluated)));
-                                    console.log(d);
                                     evaluated = fitnessEvaluator({
                                         "limit": request.limit,
                                         "items": data.items,
@@ -48,8 +41,6 @@
                                 } catch (e) {
                                     console.log(e);
                                 }
-
-
                             }
 
                             socket.emit("result", {
@@ -80,7 +71,6 @@
                             }
 
                             return res.status(200).json({
-                                // items: data.items,
                                 hypothesis: evaluated
                             });
                         });

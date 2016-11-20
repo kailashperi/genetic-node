@@ -2,6 +2,8 @@
 (function () {
     "use strict";
     var express = require("express"),
+        cfenv = require('cfenv'),
+        appEnv = cfenv.getAppEnv(),
         bodyParser = require("body-parser"),
         engines = require("consolidate"),
         path = require("path"),
@@ -29,14 +31,10 @@
         fs = require("fs"),
         morgan = require("morgan");
 
-    console.log(eventEmitter);
-
-    app.set("json spaces", 4);
     app.use(compress());
     app.use(morgan("dev"));
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json({limit: "50mb"}));
-    // app.use(express["static"](path.join(__dirname, "./server/public/")));
     app.use(express["static"](path.join(__dirname, "./server/public/"), { maxAge: 16400000 }));
     app.use(express["static"](path.join(__dirname, "./client/")));
 
@@ -46,20 +44,12 @@
     app.set("view engine", "html");
 
 
-    app.get("/", function (req, res) {
-        return res.status(200).render("./views/main.html")
-    });
-
-    app.post("/tst", function (req, res) {
-        console.log("oiieeee");
-        return res.status(200).send("ok");
-    });
 
     require("./server/routes/index.js")(app, upload, inputProcesser, hypothesisGenerator, fitnessEvaluator, mutator, io, fs);
 
 
-    server.listen(9500, function () {
-        console.log("App running on 9500");
+    server.listen(appEnv.port, appEnv.bind, function () {
+        console.log(appEnv.url);
     });
 
 

@@ -61,9 +61,7 @@
                     }
                 }
 
-                if (hypothesis[i][hypothesis[i].length - 1].hasOwnProperty("fitness")) {
-                    console.log("has fitness");
-                } else {
+                if (!hypothesis[i][hypothesis[i].length - 1].hasOwnProperty("fitness")) {
                     hypothesis[i].push({
                         "fitness": this.evaluate({
                             "weight": weightCounter,

@@ -3,6 +3,6 @@ applications:
   memory: 256M
   instances: 1
   domain: mybluemix.net
-  name: ia-challenge
-  host: ia-challenge
+  name: kp-ia-challenge
+  host: kp-ia-challenge
   disk_quota: 1024M
